@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>VsChromiumMcp.Daemon</RootNamespace>
+    <AssemblyName>VsChromiumMcp.Daemon</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VsChromiumMcp.Shared\VsChromiumMcp.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="VsChromium.Core">
+      <HintPath>..\..\vendor\vs-chromium\Binaries\Release\VsChromium.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\..\vendor\vs-chromium\Binaries\Release\protobuf-net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

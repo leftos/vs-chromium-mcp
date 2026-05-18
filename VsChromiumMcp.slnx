@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Prototype/Prototype.csproj" />
+    <Project Path="src/VsChromiumMcp.Daemon/VsChromiumMcp.Daemon.csproj" />
+    <Project Path="src/VsChromiumMcp.Shared/VsChromiumMcp.Shared.csproj" />
+    <Project Path="src/VsChromiumMcp/VsChromiumMcp.csproj" />
+  </Folder>
+</Solution>

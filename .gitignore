@@ -1,0 +1,17 @@
+# Build outputs
+bin/
+obj/
+.vs/
+*.user
+
+# NuGet
+packages/
+*.nupkg
+
+# Local state
+.tmp/
+logs/
+
+# OS
+Thumbs.db
+desktop.ini
