@@ -88,4 +88,4 @@ The C++ Native search engine builds with PlatformToolset `v143` (upstream's `v14
 
 ## License
 
-vs-chromium itself is BSD-licensed by Google. This wrapper is provided as-is for personal use.
+This wrapper is MIT-licensed (see [LICENSE](LICENSE)). vs-chromium itself, vendored as a submodule, is BSD-licensed by Google.
