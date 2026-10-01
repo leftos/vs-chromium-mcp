@@ -42,7 +42,7 @@ pwsh scripts/install.ps1
 claude mcp list   # should show "vs-chromium ... ✓ Connected"
 ```
 
-To re-install after a rebuild: `pwsh scripts/install.ps1 -Force`
+`install.ps1` builds, copies the MCP server, the daemon and the vendor indexer into `%LOCALAPPDATA%\VsChromiumMcp\app`, and registers that copy. Claude never runs the server from the repo's `bin` folders, which builds overwrite and build-output cleaners delete. Re-run it after every change to take the change live; it stops a running daemon first.
 
 ## Tools exposed
 

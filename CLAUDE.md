@@ -13,10 +13,11 @@ All scripts require PowerShell 7+ (`pwsh`), are idempotent, and live in `scripts
 ```powershell
 git submodule update --init        # one-time after clone
 pwsh scripts/build.ps1             # build vendor + MCP solution (skips vendor if already built)
-pwsh scripts/install.ps1           # claude mcp add vs-chromium --scope user
-pwsh scripts/install.ps1 -Force    # re-register after rebuild
+pwsh scripts/install.ps1           # build, copy into %LOCALAPPDATA%\VsChromiumMcp\app, register that copy at user scope
 pwsh scripts/install.ps1 -Uninstall
 ```
+
+Claude runs the installed copy, never the repo's `bin` output (a daily clean of build folders on D:\ deletes it). A change goes live only after `install.ps1` runs again.
 
 To force a vendor rebuild, delete `vendor/vs-chromium/Binaries/Release/VsChromium.Native.dll` and rerun `build.ps1`. `build-vendor.ps1` requires `nuget.exe` and `vswhere.exe` on PATH, plus VS 2022 with .NET-desktop + C++-desktop workloads.
 
