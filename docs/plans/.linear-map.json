@@ -1,0 +1,64 @@
+{
+  "issues": {
+    "DOCS": {
+      "id": "c39fc714-bc0a-41a9-8a5e-4962c79e6795",
+      "identifier": "VSCM-13",
+      "linked": true
+    },
+    "L24": {
+      "id": "f6819687-6081-487d-97e4-4e42c909acb5",
+      "identifier": "VSCM-3",
+      "linked": true
+    },
+    "L25": {
+      "id": "b24421f0-9bd4-40f7-9135-aea1f0b65ecd",
+      "identifier": "VSCM-9",
+      "linked": true
+    },
+    "L26": {
+      "id": "e2a956ef-26ff-4d68-b8fa-17cfbf115798",
+      "identifier": "VSCM-5",
+      "linked": true
+    },
+    "L27": {
+      "id": "e806f963-3420-4a39-a28a-389777026279",
+      "identifier": "VSCM-8",
+      "linked": true
+    },
+    "L29": {
+      "id": "b7264aac-6a5a-46d9-a0a9-503903ad8253",
+      "identifier": "VSCM-6",
+      "linked": true
+    },
+    "L30": {
+      "id": "e72d3b3a-d7f7-4732-875a-001e06bf8add",
+      "identifier": "VSCM-7",
+      "linked": true
+    },
+    "L34": {
+      "id": "34a52ef5-f8ab-468e-9f89-836af5d18f7e",
+      "identifier": "VSCM-10",
+      "linked": true
+    },
+    "L35": {
+      "id": "1a6a6003-a544-4ffd-b8dc-021e761b6a58",
+      "identifier": "VSCM-11",
+      "linked": true
+    },
+    "L36": {
+      "id": "2657194f-8e7c-457b-ad58-ac24a70cd157",
+      "identifier": "VSCM-4",
+      "linked": true
+    },
+    "L37": {
+      "id": "08379922-937b-4a67-aa1a-a2613be15e6a",
+      "identifier": "VSCM-12",
+      "linked": true
+    }
+  },
+  "projects": {
+    "BL": "ef28d664-bc74-4b24-a298-37e1a544c3b4",
+    "BUILD": "33d708c9-f164-4204-abc8-c416d32ca9b5",
+    "DAEMON": "85f54094-1ca9-40a9-9055-f7083f401d3e"
+  }
+}

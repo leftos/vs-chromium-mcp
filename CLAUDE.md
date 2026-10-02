@@ -28,7 +28,7 @@ dotnet build VsChromiumMcp.slnx -c Release
 # Solution uses .slnx (XML), not .sln. DaemonBootstrap and Daemon's Program both look for either at the repo root.
 ```
 
-There is **no test suite** (it's on the backlog in `docs/plans/MAIN.md`). When changing daemon or pipe behavior, the manual smoke test is `src/Prototype/Program.cs` for the raw protobuf round-trip, plus `claude mcp list` followed by exercising the tools from a Claude session.
+There is **no test suite** (an open Linear issue in team VSCM). When changing daemon or pipe behavior, the manual smoke test is `src/Prototype/Program.cs` for the raw protobuf round-trip, plus `claude mcp list` followed by exercising the tools from a Claude session.
 
 ## Architecture
 
@@ -43,6 +43,12 @@ Claude Code  ─stdio─>  VsChromiumMcp.exe  ─named pipe─>  VsChromiumMcp.D
 - **`src/VsChromiumMcp.Daemon/`** — persistent supervisor. `Program.cs` holds a `Global\VsChromiumMcp.Daemon.SingleInstance` mutex so only one ever runs. `VsChromiumServerHost` spawns `VsChromium.Server.exe`, accepts its TCP loopback connect-back, handles the protobuf hello handshake, and correlates requests/responses by `RequestId` over a background reader thread. `Operations` is the high-level orchestrator. `PipeServer` exposes a line-delimited JSON request/response on `\\.\pipe\VsChromiumMcp.Daemon`.
 - **`src/VsChromiumMcp.Shared/`** — DTOs for the named-pipe protocol (`PipeProtocol.cs`) and well-known paths (`Paths.cs`). Shared by MCP and daemon, no other deps.
 - **`src/Prototype/`** — standalone smoke test for the raw vs-chromium protobuf round-trip. Not referenced by anything else; kept for diagnostics.
+
+### Why this shape
+
+- **Unmodified upstream plus its `Core.dll` types**, rather than a fork that extracts the indexer: vs-chromium's IPC is documented protobuf, not opaque, so referencing `Core.dll` gives every message type for free. Maintaining a fork is more work than vendor-patching one line of MSBuild config.
+- **A persistent daemon**: an MCP server launched per Claude session over stdio would cold-index every time. The user chose warm indices over per-session simplicity.
+- **Named pipes between MCP and daemon**: stdio MCP processes are short-lived and per-session, and the daemon must be reachable by any later MCP instance. Named pipes are the Windows-native choice with no port conflicts.
 
 ### Key cross-file flows
 
@@ -70,11 +76,11 @@ This two-phase design is the reason `EnsureIndexedAsync` looks more complex than
 - **`VsChromium.Core.dll` is .NET Framework 4.7.1**, referenced directly via `<Reference HintPath=...>` from the daemon csproj. This works because protobuf-net DTOs serialize identically across the runtime boundary. The retarget from upstream's `v4.5` → `v4.7.1` is applied as an idempotent in-place patch by `scripts/build-vendor.ps1` to `vendor/vs-chromium/Build/Common.Build.settings` — that's the one line of upstream we touch. Do not commit the patched file from `vendor/`; the script reapplies it.
 - **C++ Native uses PlatformToolset `v143`**, not upstream's `v140` (VS 2015 build tools are not installed by default on modern VS).
 - **`ensure_indexed` writes a `vs-chromium-project.txt` to the user's repo** if one doesn't exist. Treat that as part of the contract.
-- **Detached daemon spawn is `cmd /c start /b`** — known brittle (dies if the desktop session ends abnormally). Listed as an open item in `docs/plans/MAIN.md`; if you change spawn semantics, update both.
+- **Detached daemon spawn is `cmd /c start /b`** — known brittle (dies if the desktop session ends abnormally). An open Linear issue in team VSCM; if you change spawn semantics, update this line too.
 
 ## Plan workflow (project-specific)
 
-`docs/plans/MAIN.md` is the single entry point for ongoing work — Done, Open, Backlog, and design rationale. Every new task lands there as an unchecked checkbox before being worked. Per global instructions, capture user steers as tasks in `MAIN.md` (or an active subplan) immediately, before responding in prose.
+The plan lives in Linear: every task is a Linear issue in team VSCM, grouped into projects worked in order (the `vs-chromium-mcp-nextup` profile names the order). `docs/plans/MAIN.md` is a generated snapshot of it, never edited by hand: change Linear, then regenerate it. A steer or finding mid-task gets an **add** first, before any reply in prose. The operations (**add**, **land**, **triage** and the rest) are in `~/.claude/docs/plan-operations.md`.
 
 ## Conventions specific to this repo
 
